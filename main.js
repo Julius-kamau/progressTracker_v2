@@ -170,104 +170,13 @@ function resetDailyProgressVals() {
 
 //TO DO LIST FUNCTIONS
 function createToDoDummy(boolAttatchEVent){
-   ////alert("creating to do dummy");
-   const taskHolder = createEl('div');
-   taskHolder.classList.add('taskHolder');
-   const taskTittle = createEl('h5');
-   taskTittle.classList.add('TaskTittle');
-   taskTittle.innerText = "ENTER TASK TITE HERE";
-   taskTittle.contentEditable = "true";
-   const taskcontentHodler = createEl('span');
-   taskcontentHodler.classList.add('taskcontentHodler');
-   taskcontentHodler.innerText = "task details here";
-   taskcontentHodler.contentEditable = "true";
-   const taskDates = createEl('span');
-   taskDates.classList.add('taskDates');
-   const dateCreated = createEl('tt');
-   dateCreated.classList.add('dateCreated');
-   dateCreated.innerText = new Date();
-   const dateDue = createEl('tt');
-   dateDue.classList.add('dateDue');
-   dateDue.innerText = "due in ";
-   const daysLeft = createEl('input');
-   daysLeft.type = "number";
-   daysLeft.placeholder = ' daedline here';
-   daysLeft.classList.add('inputs');
-   const unitOfTimeInpt = createEl('select');
-   unitOfTimeInpt.classList.add('inputs');
-   const unitOfTimeOptions = ["days","hours","minutes"];
-   const datesepartor = createEl("tt");
-   datesepartor.innerText = "-";
-   const lineBreak = createEl('br');
-   const completeTaskBtn = createEl('button');
-   completeTaskBtn.classList.add('completeTaskBtn');
-   completeTaskBtn.innerText = "CREATE THIS TASK";
-   if(boolAttatchEVent) completeTaskBtn.addEventListener('click', (e)=> {createToDo(e.target.parentElement, true, true,true)}, {once: true});
-   taskHolder.appendChild(taskTittle);
-   taskHolder.appendChild(taskcontentHodler);
-   taskHolder.appendChild(lineBreak);
-   taskHolder.appendChild(taskDates);
-   taskDates.appendChild(dateCreated);
-   taskDates.appendChild(datesepartor);
-   taskDates.appendChild(dateDue);
-   dateDue.appendChild(daysLeft);
-   dateDue.appendChild(unitOfTimeInpt);
-   for(let i=0; i<=unitOfTimeOptions.length-1; i++){
-      const optionEl = createEl('option');
-      optionEl.value = unitOfTimeOptions[i];
-      optionEl.innerText = unitOfTimeOptions[i];
-      unitOfTimeInpt.appendChild(optionEl);
-   }
-   taskHolder.appendChild(completeTaskBtn);
-   ToDoHolder.appendChild(taskHolder);
-   taskTittle.focus();
-   return taskHolder;
+   alert('awaiting reimplementation');
 }
 function createToDo(taskHolderEl,boolPushToUserData,boolAttacheEvent,boolAttatchDates) {
-   const taskTittle = taskHolderEl.querySelector('.TaskTittle');
-   taskTittle.removeAttribute('contentEditable');
-   const taskContentHolder = taskHolderEl.querySelector('.taskcontentHodler');
-   taskContentHolder.removeAttribute('contentEditable');
-   taskHolderEl.classList.add('pendingTask');
-   const taskDates = taskHolderEl.querySelector('.taskDates');
-   const dateDue = taskDates.children[2]; //[{deadlineInt},{unitOfTime}]
-   const dateDueInt = createEl('tt');
-   const unitOfTime = createEl('tt');
-   dateDueInt.innerText = dateDue.children[0].value;
-   unitOfTime.innerText = dateDue.children[1].value;
-   dateDue.replaceChildren(dateDueInt, unitOfTime);
-   const deadlineStr = dateDueInt.innerText + unitOfTime.innerText;
-   const completeTaskBtn = taskHolderEl.querySelector('.completeTaskBtn');
-   if(boolAttatchDates){
-      //alert("asssigning dates");
-      taskDates.children[0].innerText = new Date();
-   } 
-   if(boolAttacheEvent) completeTaskBtn.addEventListener('click', (e) => {completeTask(e.target.parentElement)}, {once: true});
-   completeTaskBtn.innerText = "complete task";
-   if(boolPushToUserData){
-      //{tittle: "study", details: "study for exam...", dateCreated: "....", deadline: "..."...}
-      ////alert('pushing to user task to data ');
-      const taskObj = createTaskObj(taskTittle.innerText,taskContentHolder.innerText,taskDates.children[0].innerText,deadlineStr,false);
-      updateUserData(2,null,taskObj);
-   }
+   alert('awaiting reimplementation');
 }
 function completeTask(taskholderEl){
-   ////alert('marking task as complete');
-   const taskTittle = taskholderEl.querySelector('.TaskTittle');
-   const taskContentHolder = taskholderEl.querySelector('.taskcontentHodler');
-   const taskDates = taskholderEl.querySelector('.taskDates');
-   const completeTaskBtn = taskholderEl.querySelector('.completeTaskBtn');
-   const oldTaskObj = createTaskObj(taskTittle.innerText,taskContentHolder.innerText,taskDates.children[0].innerText,taskDates.children[2].innerText,false);
-   taskholderEl.classList.add('completedTask');
-   taskDates.children[2].innerText = 'completed';
-   completeTaskBtn.innerText = "delete task";
-   completeTaskBtn.addEventListener('click', (e) => {deleteTask(e.target.parentElement)}, {once: true});
-   const newTaskObj = createTaskObj(taskTittle.innerText,taskContentHolder.innerText,taskDates.children[0].innerText,taskDates.children[2].innerText,true);
-   let currentObjDate = JSON.stringify(taskDates.children[0].innerText);
-   //alert(new Date(currentObjDate).getTime());
-   const index = userData[2].findIndex(task => new Date(task.dateCreated).getTime() === new Date(currentObjDate).getTime());
-   //alert("index of old task is "+index);
-   updateUserData(2,index,newTaskObj);
+   alert('awaiting reimplementation');
 }
 function deleteTask(taskHolderEl){
    const taskDates = taskHolderEl.querySelector('.taskDates');
@@ -282,97 +191,17 @@ function deleteTask(taskHolderEl){
    taskHolderEl.remove();
 }
 function createTaskObj(title,content,dateCreated,deadline,isComplete){
-   const taskObj = {title: title, details: content, dateCreated: dateCreated, deadline: deadline, iscomplete: isComplete};
-   ////alert("task obj is: "+JSON.stringify(taskObj));
-   return taskObj;
+   alert('awaiting reimplementation');
+
 }
 function updateDeadlinesOnDb(daysPassed,hoursPassed,minsPassed){
-   const taskObjsLi = userData[2];
-   if (taskObjsLi.length < 1) return;
-   for(let i=0; i<=taskObjsLi.length-1; i++){
-       const currTaskObj = taskObjsLi[i];
-       const currdeadlineStr = currTaskObj.deadline;
-       let deadlineInt = parseInt(currdeadlineStr.match(/\d+/)?.[0] ?? 0);
-       let unitOfTime = "units of time";
-       if(deadlineInt <= 0) {
-         //alert('task is overdue '+ currTaskObj.title);
-         continue;
-       }
-       if(currdeadlineStr.includes('day')){
-          unitOfTime = "days";
-          const timePassed = convertTime(unitOfTime, [daysPassed,hoursPassed,minsPassed])[0];
-          const newDeadlineInt = deadlineInt - timePassed;
-          taskObjsLi[i].deadline = newDeadlineInt + " " + unitOfTime;
-          continue;
-       }
-       else if(currdeadlineStr.includes('hr')){
-          unitOfTime = 'hours';
-          const timePassed = convertTime(unitOfTime, [daysPassed,hoursPassed,minsPassed])[1];
-          const newDeadlineInt = deadlineInt - timePassed;
-          taskObjsLi[i].deadline = newDeadlineInt + " " + unitOfTime;
-          continue;
-       }
-       else if(currdeadlineStr.includes('m')){
-          unitOfTime = 'minutes';
-          const timePassed = convertTime(unitOfTime, [daysPassed, hoursPassed, minsPassed])[2];
-          const newDeadlineInt = deadlineInt - timePassed;
-          taskObjsLi[i].deadline = newDeadlineInt + " " + unitOfTime;
-          continue;
-       }
-       else {
-          taskObjsLi[i].deadline = deadlineInt - 1;
-          continue;
-       }
-   }
-   updateUserData(2, 'null', userData[2]);
+   alert('awaiting reimplementation');
 }
 function updateToDosDeadline(boolUseSession = true){
-   let timePassed;
-   if(userData[2].length < 1) return;
-   ////alert('updating deadlines');
-   if(!boolUseSession) {
-      //alert('we are not using session time rather using last seen.last seen is '+userData[3]['lastSeen']);
-      timePassed = getTimePassed(userData[3]['currLogin'], userData[3]['lastSeen']);
-   } else {
-      timePassed = [0,0,1];
-   }
-   updateDeadlinesOnDb(timePassed[0],timePassed[1],timePassed[2]);
-   const toDoEls = getEls('taskHolder');
-   const toDoObjs = userData[2];
-   for(let i=0; i<=toDoObjs.length-1; i++){
-      const currEl = toDoEls[i+1];
-      const taskDates = currEl.querySelector('.taskDates');
-      ////alert(taskDates.children[2].innerText);
-      const newDeadlineStr = toDoObjs[i]['deadline'];
-      taskDates.children[2].innerText = newDeadlineStr;
-   }
+   alert('awaiting reimplementation');
 }
 function loadTasks(){
-   ////alert('loading tasks')
-   const taskObjectsLi = userData[2];
-   if(taskObjectsLi.length<1) return;
-   //[{},{},{}] .innerText
-   for(let i=0; i<=taskObjectsLi.length-1; i++){
-      const taskHolder = createToDoDummy(false);
-      taskHolder.querySelector('.TaskTittle').innerText = taskObjectsLi[i]['title'];
-      taskHolder.querySelector('.taskcontentHodler').innerText = taskObjectsLi[i]['details'];
-      const taskDates = taskHolder.querySelector('.taskDates');
-      const isComplete = taskObjectsLi[i]['iscomplete'];
-      taskDates.children[0].innerText = taskObjectsLi[i]['dateCreated'];
-      const dateDue = taskDates.children[2]; //[{dateDueInt},{deadlineStr}]
-      const deadlineInt = taskObjectsLi[i].deadline.match(/\d+/)?.[0] ?? 0;
-      const unitOftime = taskObjectsLi[i].deadline.replace(deadlineInt, "");
-      dateDue.children[0].value = deadlineInt;
-      alert(unitOftime);
-      dateDue.children[1].value = unitOftime.trim();
-      createToDo(taskHolder,false,!isComplete,false);
-      ////alert(JSON.stringify(taskObjectsLi[i]));
-      if(isComplete){
-         ////alert("currtask is completed");
-         taskHolder.querySelector('.completeTaskBtn').innerText = "delete task";
-         taskHolder.querySelector('.completeTaskBtn').addEventListener('click', (e)=> {deleteTask(e.target.parentElement)});
-      }
-   }
+   alert('awaiting reimplementation');
 }
 
 
@@ -440,20 +269,20 @@ function convertTime(convertTo, timePassedArr){
       return [0,0,timeIndays];
    }
 }
-function subtractTime(dayA,hourA,minA,dayB,hourB,minB){
-   const operandA = [dayA,hourA,minA];
-   const operandB = [dayB,hourB,minB];
+function subtractTime(dayA, hourA, minA, dayB, hourB, minB) {
+   const operandA = [dayA, hourA, minA];
+   const operandB = [dayB, hourB, minB];
+   const borrow = [0, 24, 60]; 
    const answer = [];
-   for(let i=2; i>=0; i--){
-      const borrow = i*36-12;
-      if(operandA[i] < operandB[i] && i>0){
-         operandA[i-1] = operandA[i-1]-1;
-         operandA[i]+=borrow;
+   for (let i = 2; i >= 0; i--) {
+      if (operandA[i] < operandB[i] && i > 0) {
+         operandA[i - 1] -= 1;
+         operandA[i] += borrow[i];
       }
       const currAns = operandA[i] - operandB[i];
-      answer.unshift(currAns);
+      answer.unshift(currAns/2);
    }
-   return answer; //days,hours,mins
+   return answer; // [days, hours, mins]
 }
 function resetGraphVals(){
    const defaultVals = userData[0];
@@ -582,14 +411,14 @@ function appendBenchmarks(){
         isConstructiveInpts[i].value = isConstructiveLi[i];
       } 
    } else {
-       //alert("error while appending benchmarks"); 
+       alert("error while appending benchmarks"); 
    }
 }
 
 
 function updateSessionData(){
    updateCurrentSession();
-   updateToDosDeadline(true);
+   //updateToDosDeadline(true);
 }
 function setUp() {
    const date = new Date();
@@ -639,36 +468,11 @@ function setUp() {
 setUp();
 updateToDosDeadline(false);
 setInterval(updateSessionData, 60000);
-//////alert(JSON.stringify(userData));
-/* 
-YOU WILL NEED TO REWORK HOW DEADLINES WORK FROM SCRATCH
-  sessions will always last 1 minute
-   if user comes back we need to update deadlines using the time passed btwn last seen and currlogin;
-   updateToDosdeadline(usesession = true){
-      ...
-      if(useSession = false){
-         timePassed = getTimePassed(userData[3]['currlogin'], userData[3]['lastSeen']); => [days,hrs,mins,isNextDay]
-      } else {
-         timePassed = [0,0,1];
-      }
-      ...
-   }
-      YOU WILL NEED TO CHANGE THE WAY GET TIME PASSED WORKS SO IT JUST GETS 2 DATE STRINGS OR OBJECTS AND SUBTRACTS 
-      THEM INSTEAD OF IT JUST GETTING CURRLOGIN AND LAST LOGIN
+let myDateA = parseDateToDayHourMin(userData[3].currLogin);
+let myDateB = parseDateToDayHourMin(userData[3].lastSeen);
+let timeDifference = subtractTime(myDateA[0],myDateA[1],myDateA[2],myDateB[0],myDateB[1],myDateB[2]);
+alert(myDateA + ' MY DATE B:  ' + myDateB + " TIME DIFFERNCE:  " + timeDifference);
 
-   also we need to convert the deadline str to a usable int for subtraction,sthng like
-   user said deadline is 4 hours
-   yk waht instead its way easier to set a specific date for the deadline
-   rather than a countdown- so
-   we do sthng like 
-   user says deadline is inn 3hours 
-   we just set a deadline date in the task object and then we just keep subtracting current time from
-   the dadeline and then display the countdown.
-
-*/
 /*
-a few bad design patterns that make the code hard to understand
-1.some of what the code does is hidden in the html hence its kinda hard to decode esp the 'theGraph' variable
-2.using if else for different work cases,brruuuh -i dont think thats baad,duuuh...it works fine
-3.nested if statement,Heeeel nahh maahn
+   JUST REBUILD TASKS FROM THE GROUND UP
 */

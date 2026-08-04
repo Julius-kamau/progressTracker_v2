@@ -1,0 +1,382 @@
+* {
+    box-sizing: border-box;
+}
+html, body {
+    padding: 0;
+    margin: 0;
+    height: 100vh;
+    background-image: linear-gradient(45deg, #1c1c1c, #1a1c3e);
+    font-family: sans-serif;
+    color: rgb(217, 212, 212);
+    font-size: small;
+}
+* {
+  scrollbar-width: none;
+}
+::-webkit-scrollbar {
+  display: none;
+}
+::-webkit-outer-spin-button, ::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: o;
+}
+
+
+a{
+    justify-self: center;
+    text-decoration: none;
+    color: inherit;
+    font-style: oblique;
+    font-family: monospace;
+    padding: 5px;
+    background-color: rgba(180, 70, 217, 0.519);
+    border-radius: 100px;
+    border: 1px solid rgb(68, 7, 7);
+    text-shadow: 0px 0px 0px rgb(33, 4, 4);
+}
+
+h3 {
+    box-shadow: 3px 4px 5px rgb(13, 2, 25);
+    justify-self: center;
+    background-color: rgba(23, 4, 53, 0.801);
+    border-radius: 4px;
+    padding: 6px;
+}
+
+button{
+    border: 1px solid black;
+    border-radius: 7px;
+    display: inline;
+}
+
+input {
+    display: inline-block;
+    width: fit-content;
+}
+
+#setBenchmarksHolder {
+    display: none;
+    padding: 15px;
+    row-gap: 15px;
+    font-family: monospace;
+    backdrop-filter: blur(40px);
+    position: fixed;
+    margin-top: 2%;
+    width: 98%;
+    height: 95%;
+    justify-self: center;
+    overflow-y: auto;
+    border: 2px solid rgb(138, 89, 187);
+    border-radius: 9px;
+    z-index: 101;
+}
+#braethingDot {
+    justify-self: right;
+    align-self: center;
+    margin-left: 9px;
+    width: 2vw;
+    height: 5vw;
+    background-color: rgb(238, 224, 249);
+    box-shadow: 0px 0px 15px rgb(8, 16, 55);
+    border-radius: 30px;
+}
+
+#graphsHolder {
+    margin-top: 16px;
+    display: flex;
+    justify-content: space-evenly;
+    align-content: center;
+    justify-self: left;
+    margin-left: 1vw;
+    backdrop-filter: blur(10px);
+    height: 40vh;
+    width: 98vw;
+    border-radius: 9px;
+    border: 0.5px solid rgb(208, 179, 255);
+    box-shadow: 0px 2px 25px rgb(8, 16, 55);
+    overflow-y: scroll;
+}
+#progressGraphHolder{
+    transform: rotateX(180deg);
+    font-weight: bolder;
+    font-size: 20px;
+    display: flex;
+    justify-self: center;
+    width: 98vw;
+    height: 200px;
+    overflow-x: auto;
+    overflow-y: visible;
+    backdrop-filter: blur(10px);    
+    color: rgb(76, 30, 142);
+    text-shadow: 0px -0px 5px rgb(213, 185, 237);
+    border-radius: 5px;
+    padding: 7px;
+}
+
+#myToDoList {
+    display: grid;
+    justify-self: center;
+   /* justify-content: center;*/
+    padding-top: 7px;
+    padding-left: 13px;
+    padding-right: 13px;
+    overflow-y: auto;
+    row-gap: 17px;
+    width: 98vw;
+    height: 30vh;
+    backdrop-filter: blur(10px);
+    border-top-left-radius: 9px;
+    border-top-right-radius: 9px;
+    box-shadow: 0px -1px 15px rgba(8, 16, 55, 0.752);
+}
+
+#calcHolder{
+    position: relative;
+    z-index: 101;
+    position: fixed;
+    margin-top: clamp(30px,65vh,300px);
+    padding: 6px;
+    display: none;
+    gap: 2px;
+    width: 55vw;
+    height: max-content;
+    backdrop-filter: blur(20px);
+    border-radius: 9px;
+    box-shadow: 0px 0px 20px rgb(20, 2, 38);
+}
+#calcDisplay {
+    display: grid;
+    padding: 3px;
+    width: 100%;
+    background-color: #e3d2ff;
+    border-radius: 7px;
+}
+#calcInput {
+    font-weight: lighter;
+    font-size: large;
+    color: #961aee;
+}
+#calcAnswer {
+    font-weight: bold;
+    font-size: larger;
+    color: #9317eb;
+}
+#caclcButtonsHolder {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding: 5%;
+}
+#clearBtn {
+    width: 30%;
+}
+#useAnswerBtn {
+    width: 50%;
+}
+
+#updateGraph {
+    position: fixed;
+    width: clamp(15em,15em,50vw);
+    height: (3.5em,3.55em,25.8);
+    backdrop-filter: blur(20px);
+    padding: 7px;
+    color: #a177e4;
+    display: none;
+    justify-content: center;
+    border-radius: 15px;
+    box-shadow: 0px 0px 20px rgb(20, 2, 38);
+    margin-top: clamp(10px,22vh,100px);;
+    margin-left: 90px;
+    transition: all 0.4s ease-in;
+    z-index: 100;
+}
+#graphUpdateInput {
+    width: 80%;
+    margin-top: -10px;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    padding: 7px;
+    font-weight: bold;
+    font-size: large;
+    background-color: #bea0ec;
+    color: rgb(225, 253, 255);
+    text-shadow: 0px 0px 15px rgb(36, 11, 61);
+    box-shadow: 0px 3px 4px rgb(20, 2, 38);
+    font-family: monospace;
+}
+
+.inputs, .labels {
+    outline: none;
+    border: none;
+    border-radius: 4px;
+    padding: 3px;
+    font-weight: bold;
+    font-size: large;
+    background-color: #bea0ec;
+    color: rgb(225, 253, 255);
+    text-shadow: 0px 0px 15px rgb(36, 11, 61);
+    box-shadow: 0px 3px 4px rgb(20, 2, 38);
+    font-family: monospace;
+    transition: all 0.3s ease;
+}
+.setBenchmark {
+    display: grid;
+    row-gap: 7px;
+    padding: 20px;
+    background: linear-gradient(45deg, rgba(32, 1, 51, 0.519), rgba(4, 1, 51, 0.519));
+    border-radius: 19px;
+    box-shadow: 0px 3px 10px rgb(20, 2, 38);   
+}
+.tips {
+    font-size: smaller;
+}
+.barGraph {
+    background-color: rgb(164, 66, 245);;
+    color: rgb(225, 253, 255);
+    width: 14.7vw;
+    height: 80%;
+    word-break: break-all;
+    align-self: center;
+    text-align: center;
+    align-content: center;
+    border-radius: 5px;
+    font-family: monospace;
+    box-shadow: 0px 2px 15px rgb(8, 16, 55);
+    transition: all .3s ease-in-out;
+}
+.barGraph:hover {
+    background-color: #bcc0ff;
+    color: #222653;
+    overflow-x: visible;
+}
+.progressHolder{
+    backdrop-filter: blur(10px);
+    color: rgb(76, 30, 142);
+    text-shadow: 0px 1px 5px rgb(34, 8, 55);
+    box-shadow: 0px 0px 25px rgb(31, 37, 68);
+    border-radius: 5px;
+    padding: 7px;
+}
+.dailyProgress{
+    width: 65%;
+    padding: 4px;
+    background-color: #bea0ec;
+    color: #bcc0ff;
+    border-radius: 5px;
+}
+.progressMarker{
+    font-size: 7vh;
+    transition: all .4s ease-in-out;
+    color: rgb(229, 189, 255);
+}
+.taskHolder {
+    justify-self: center;
+    display: grid;
+    padding: 9px;
+    width: 100%;
+    background-image: linear-gradient(90deg, rgb(34, 16, 52), rgb(79, 22, 116));
+    border-radius: 10px;
+}
+.pendingTask {
+    border: 5px solid rgba(71, 25, 90, 0.838);
+    box-shadow: 0px 0px 10px rgb(6, 9, 70);
+}
+.completedTask {
+    border: 2px solid rgba(218, 205, 223, 0.838);
+    box-shadow: 0px 0px 10px rgb(120, 1, 118);
+}
+.TaskTittle {
+    font-family: monospace;
+    font-size: larger;
+    font-weight: bold;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-decoration-color: #d1bbf4;
+    margin: 5px;
+    color: #bcc0ff;
+}
+.taskcontentHodler {
+    font-weight: bold;
+    color: #e5dbed;
+}
+.taskDates {
+    width: 100%;
+    display: grid;
+}
+.dateCreated {
+    display: inline-flex;
+    font-size: smaller;
+}
+.dueDate {
+    display: inline-block;
+}
+.completeTaskBtn {
+    padding: 5px;
+    background-color: #d1bbf4;
+    color: #381e63;
+    font-weight: bold;
+    border-radius: 9px;
+}
+.completeTaskBtn:hover {
+    background-color: #ffffff;
+    color: #000000;
+}
+.calcBtn {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    padding: 2%;
+    font-weight: lighter;
+    font-size: larger;
+    width: 85%;
+    height: 88%;
+    background-color: rgba(230, 162, 255, 0.838);
+    color: white;
+    box-shadow: 0px 5px 15px rgb(68, 9, 117);
+    caret-color: rgba(247, 241, 255, 0);
+    border: none;
+    border-radius: 7px;
+    justify-content: center;
+    outline: none;
+}
+.calcBtn:hover {
+    box-shadow: 0px 10px 15px rgb(68, 9, 117);
+}
+.calcBtn:active {
+    box-shadow: 0px 10px 15px rgb(68, 9, 117);
+    background-color: rgba(218, 205, 223, 0.838);
+
+}
+.submitBtn {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    padding: 5px;
+    font-weight: lighter;
+   width: fit-content;
+    height: 30px;
+    overflow-y: hidden;
+    background-color: #d1bbf4;
+    color: #381e63;
+    box-shadow: 0px 3px 5px rgb(68, 9, 117);
+    caret-color: rgba(247, 241, 255, 0);
+    border: none;
+    border-radius: 7px;
+    transition: all 0.7s ease-out;
+}
+.submitBtn:hover {
+    height: fit-content;
+    background-color: #fff5f5;
+}
+
+@keyframes taskFadeOut {
+    from{
+        background: linear-gradient(90deg, rgb(34, 16, 52), rgb(79, 22, 116));
+    }
+    99% {
+        background: linear-gradient(90deg, rgba(34, 16, 52, 0.1), rgba(79, 22, 116, 0.1))
+    }
+    to {
+        display: none;
+    }
+}

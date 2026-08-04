@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--<meta http-equiv="refresh" content="30">-->
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="setBenchmarksHolder">
+        <div id = "changeTrackables" class = "setBenchmark" >
+            <h3>change the ITEMS I WANT TO TRACK</h3>
+            <tt class="tips"></tt>
+            <input type="text" oninput="this.value=this.value.replace(/[^A-Za-z]/g, '_')" id="trackableA" class="inputs trackables" value="earning" onchange="updateFormVals('trackableA')"/>
+            <input type="text" oninput="this.value=this.value.replace(/[^A-Za-z]/g, '_')" id="trackableB" class="inputs trackables" value="saving" onchange="updateFormVals('trackableB')"/>
+            <input type="text" oninput="this.value=this.value.replace(/[^A-Za-z]/g, '_')" id="trackableC" class="inputs trackables" value="coding" onchange="updateFormVals('trackableC')"/>
+            <input type="text" oninput="this.value=this.value.replace(/[^A-Za-z]/g, '_')" id="trackableD" class="inputs trackables" value="drawing" onchange="updateFormVals('trackableD')"/>
+            <input type="text" oninput="this.value=this.value.replace(/[^A-Za-z]/g, '_')" id="trackableE" class="inputs trackables" value="others" onchange="updateFormVals('trackableE')"/>
+            <input type="text" oninput="this.value=this.value.replace(/[^A-Za-z]/g, '_')" id="trackableF" class="inputs trackables" value="sleep" onchange="updateFormVals('trackableF')"/>
+        </div>
+        <div id = "changeGoalScore" class = "setBenchmark">
+            <h3>change the GOAL FOR EACH ITEM</h3>
+            <span>target <tt class="trackableA">earnning</tt></span>
+            <input type="number" max="10000" oninput="if(this.value>100000) this.value=99999" id="tarckableAGoal" class="inputs target"/>
+            <span>target <tt class="trackableB">saving</tt></span>
+            <input type="number" max="100000" oninput="if(this.value>100000) this.value=99999" id="tarckableBGoal" class="inputs target"/>
+            <span>target <tt class="trackableC">coding</tt></span>
+            <input type="number" max="100000" oninput="if(this.value>100000) this.value=99999" id="tarckableCGoal" class="inputs target"/>
+            <span>target <tt class="trackableD">drawing</tt></span>
+            <input type="number" max="100000" oninput="if(this.value>100000) this.value=99999" id="tarckableDGoal" class="inputs target"/>
+            <span>target <tt class="trackableE">others</tt></span>
+            <input type="number" max="100000" oninput="if(this.value>100000) this.value=99999" id="tarckableEGoal" class="inputs target"/>
+            <span>target <tt class="trackableF">sleep</tt></span>
+            <input type="number" max="100000" oninput="if(this.value>100000) this.value=99999" id="tarckableFGoal" class="inputs target"/>
+        </div>
+        <div id = "changeConstructiveness" class="setBenchmark">
+            <h3>set CONSTRUCTIVE and DESTRUCTIVE items</h3>
+            <span class="tips">
+                constructive habbits add to ur overall score while destructive habbits deduct from ur overall score
+            </span>
+            <br/>
+            <tt class="trackableA">earnings: </tt>
+            <select id="AisConstructiveInpt" class="labels isConstructiveInpt">
+                <option value="1">is constructve</option>
+                <option value="-1">is destructive</option>                
+                <option value="0">has no effect</option>
+            </select>
+            <br/>
+            <tt class="trackableB">saving: </tt>
+            <select id="BisConstructiveInpt" class="labels isConstructiveInpt">
+                <option value="1">is constructve</option>
+                <option value="-1">is destructive</option>                
+                <option value="0">has no effect</option>
+            </select>
+            <br/>
+            <tt class="trackableC">coding: </tt>
+            <select id="CisConstructiveInpt" class="labels isConstructiveInpt">
+                <option value="1">is constructve</option>
+                <option value="-1">is destructive</option>
+                <option value="0">has no effect</option>
+            </select>
+            <br/>
+            <tt class="trackableD">drawing: </tt>
+            <select id="DisConstructiveInpt" class="labels isConstructiveInpt">
+                <option value="1">is constructve</option>
+                <option value="-1">is destructive</option>
+                <option value="0">has no effect</option>
+            </select>
+            <br/>
+            <tt class="trackableE">oters: </tt>
+            <select id="EisConstructiveInpt" class="labels isConstructiveInpt">
+                <option value="1">is constructve</option>
+                <option value="-1">is destructive</option>
+                <option value="0">has no effect</option>
+            </select>
+            <br/>
+            <tt class="trackableF">sleep: </tt>
+            <select id="FisConstructiveInpt" class="labels isConstructiveInpt">
+                <option value="1">is constructve</option>
+                <option value="-1">is destructive</option>                
+                <option value="0">has no effect</option>
+            </select>
+        </div>
+        <button class="submitBtn" onclick="finishSetBenchmarks()"> FINISH SETUP </button>
+        <button class="submitBtn" onclick="hidePopUp('setBenchmarksHolder')"> CANCEL </button>
+    </div>
+
+
+
+    <div id="updateGraph">
+        <p style="margin-bottom: -10px;"> <b>Update <span id="graphTittle"></span> graph </b></p>
+        <p>How Much did you <span id="graphText"></span> today</p>
+        <center>
+        <input type="number" max="100000" oninput="if(this.value>100000) this.value=99999" id="graphUpdateInput"/>
+        </center>
+        <div style="display: flex; justify-content: space-between; margin-top: 15px;">
+            <button class="submitBtn" onclick="showPopUp('calcHolder', 'grid')">show calc</button>
+            <button class="submitBtn" onclick="graphUpdate('null','null', 'submit')">submit</button>
+            <button class="submitBtn" onclick="hidePopUp('updateGraph')">cancel</button>
+        </div>
+    </div>
+
+    <div id="calcHolder">
+        <div id="calcDisplay">
+            <span id="calcInput"></span></br>
+            <span id="calcAnswer"></span>
+        </div>
+        <div id="caclcButtonsHolder">
+            <span class="calcBtn" contenteditable="false" onclick="typeIn('1')">1</span>
+            <span class="calcBtn" contenteditable="false" onclick="typeIn('2')">2</span>
+            <span class="calcBtn" contenteditable="false" onclick="typeIn('3')">3</span>
+            <span class="calcBtn" contenteditable="false" onclick="typeIn('4')">4</span>
+            <span class="calcBtn" contenteditable="false" onclick="typeIn('5')">5</span>
+            <span class="calcBtn" contenteditable="false" onclick="typeIn('6')">6</span>
+            <span class="calcBtn" contenteditable="false" onclick="typeIn('7')">7</span>
+            <span class="calcBtn" contenteditable="false" onclick="typeIn('8')">8</span>
+            <span class="calcBtn" contenteditable="false" onclick="typeIn('9')">9</span>
+            <span class="calcBtn" contenteditable="false" onclick="typeIn('0')">0</span>
+            <span class="calcBtn" contenteditable="false" onclick="typeIn('+')">+</span>
+            <span class="calcBtn" contenteditable="false" onclick="typeIn('-')">-</span>
+            <span class="calcBtn" contenteditable="false" onclick="typeIn('x')">x</span>
+            <span class="calcBtn" contenteditable="false" onclick="typeIn('/')">/</span>
+            <button class="calcBtn" onclick="parseOperation()">=</button>
+        </div>
+        <div style="display: flex; justify-content: space-evenly;">
+            <button class="submitBtn" onclick="clearCalc()"><tt>Clear</tt></button>
+            <button class="submitBtn" onclick="graphUpdate('null','null', 'submit')"><tt>submit</tt></button>
+            <button class="submitBtn" onclick="hidePopUp('calcHolder')">hide</button>
+        </div>
+    </div>
+
+    <div style="display: flex;">
+        <div id="graphsHolder">
+            <div id="earning" class="barGraph">earning</div>
+            <div id="saving" class="barGraph">saving</div>
+            <div id="coding" class="barGraph">coding</div>
+            <div id="drawing" class="barGraph">drawing</div>
+            <div id="others" class="barGraph">others</div>
+            <div id="sleep" class="barGraph">sleep</div>
+        </div>
+    </div>
+    <center><tt class="tips" style = "margin-top: 50px;">click on a graph to input data</tt></center>
+    <br/><br/>
+    <center><button class="submitBtn" onclick="showPopUp('setBenchmarksHolder', 'grid')">SET MY BENCHMARKS</button></center>
+    
+    <br><br>
+    <div class="progressHolder">
+        <center><h4 class="dailyProgress">Daily Progress</h4></center>
+        <div id="progressGraphHolder">
+        <!--
+            <tt class="progressMarker" style="margin-top: 130px">.</tt>
+            <tt class="progressMarker" style="margin-top: 40px">.</tt>
+            <tt class="progressMarker" style="margin-top: 0px">.</tt>
+            <tt class="progressMarker" style="margin-top: -3px">.</tt>
+            <tt class="progressMarker" style="margin-top: -1px">.</tt>
+            <tt class="progressMarker" style="margin-top: -0px">.</tt>
+            <tt class="progressMarker" style="margin-top: -4px">.</tt>
+            <tt class="progressMarker" style="margin-top: -8px">.</tt>
+            <tt class="progressMarker" style="margin-top: -8px">.</tt>
+            <tt class="progressMarker" style="margin-top: -7px">.</tt>
+            <tt class="progressMarker" style="margin-top: -8px">.</tt>
+            <tt class="progressMarker" style="margin-top: -5px">.</tt>
+        -->
+        </div>
+    </div>
+    <br><br>
+ 
+    <div id="myToDoList">
+        <center><h4>My To Do List</h4></center>
+        <div class="taskHolder" onclick="createToDoDummy(true)">
+            <h5 class="TaskTittle" contenteditable="true">Click here to create a to do task</h5>
+            <span class="taskcontentHodler">a new task will b ecreated for you to edit</span>
+            <br/>
+            <span class="taskDates">
+                <tt class="dateCreated">created: 2nd June 2025</tt>
+                <tt>-</tt>
+                <tt class="dateDue">due in: <b class="daysLeft">3days</b></tt>
+            </span>
+            <button class="completeTaskBtn">Create A Task</button>
+        </div>
+
+
+    <script src="main.js"></script>
+</body>
+</html>

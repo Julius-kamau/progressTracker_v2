@@ -301,14 +301,18 @@ input {
 }
 .taskDates {
     width: 100%;
-    display: grid;
+    display: flex;
 }
 .dateCreated {
     display: inline-flex;
     font-size: smaller;
 }
+.index {
+    display: none;
+}
 .dueDate {
     display: inline-block;
+    padding-right: 4px;
 }
 .completeTaskBtn {
     padding: 5px;

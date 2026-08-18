@@ -169,40 +169,267 @@ function resetDailyProgressVals() {
 
 
 //TO DO LIST FUNCTIONS
-function createToDoDummy(boolAttatchEVent){
-   alert('awaiting reimplementation');
+function createToDoDummy(){
+   const taskHolderElDummy = createEditableToDoDummy();
+   const taskBtn = taskHolderElDummy.querySelector('.completeTaskBtn');
+   const tasktitleEl = taskHolderElDummy.querySelector('.TaskTittle');
+   taskBtn.addEventListener('click', (e)=>{createNewToDoFromDummyEl(e.currentTarget.parentElement)}, {once: true});
+   getEl('myToDoList').appendChild(taskHolderElDummy);
+   tasktitleEl.focus();
 }
-function createToDo(taskHolderEl,boolPushToUserData,boolAttacheEvent,boolAttatchDates) {
-   alert('awaiting reimplementation');
+function createNewToDoFromDummyEl(taskHolderDummy){
+   const taskObj = createTaskObjFromDummyEl(taskHolderDummy);
+   const taskBtn = taskHolderDummy.querySelector('.completeTaskBtn');
+   const taskIndexEl = taskHolderDummy.querySelector('.index');
+   disableContentEditable(taskHolderDummy);
+   replaceDateEls(taskHolderDummy);
+   taskBtn.addEventListener('click', (e) => {completeTask(e.currentTarget.parentElement);}, { once: true });
+   taskBtn.innerText = 'Complete Task';
+   console.log(taskIndexEl);
+   taskIndexEl.innerText = userData[2].length;
+   taskObj.index = userData[2].length;
+   userData[2].push(taskObj);
+   updateUserData(2,"null",userData[2]);
 }
-function completeTask(taskholderEl){
-   alert('awaiting reimplementation');
+function completeTask(taskHolderEl){
+   console.log("completing task ");
+   const index = parseInt(taskHolderEl.querySelector('.index').innerText);
+   const taskObjsLi = userData[2];
+   const taskOBj = taskObjsLi[index];
+   const completeTaskBtn = taskHolderEl.querySelector('.completeTaskBtn');
+   taskOBj.isComplete = true;
+   taskOBj.deadline = "completed";
+   taskOBj.unitOftime = "";
+   updateUserData(2,'null',userData[2]);
+   completeTaskBtn.addEventListener('click', (e) => {deleteTask(e.currentTarget.parentElement)}, {once: true});
+   completeTaskBtn.innerText = 'Delete Task'; 
 }
 function deleteTask(taskHolderEl){
-   const taskDates = taskHolderEl.querySelector('.taskDates');
-   const currentObjDate = taskDates.children[0].innerText;
-   const index = userData[2].findIndex(task => task.dateCreated === currentObjDate);
-   ////alert('deleting task '+index);
-   userData[2].splice(index, 1);
-   updateUserData(2,'null',userData[2]);
-   ////alert(JSON.stringify(userData[2]));
-   //[{tittle: "study", details: "study for exam...", dateCreated: "....", deadline: "..."...},...]
-   //userData[2].splice(index, 1)
+   console.log("deleteing task");
+   const index = parseInt(taskHolderEl.querySelector('.index').innerText);
+   const taskObjsLi = userData[2];
+   taskObjsLi.splice(index, 1);
    taskHolderEl.remove();
 }
-function createTaskObj(title,content,dateCreated,deadline,isComplete){
-   alert('awaiting reimplementation');
-
-}
-function updateDeadlinesOnDb(daysPassed,hoursPassed,minsPassed){
-   alert('awaiting reimplementation');
+function loadTasksFromDB(){
+   const taskObjsLi = userData[2];
+   const toDoListEl = getEl('myToDoList');
+   //alert(JSON.stringify(userData[3]));
+   if(taskObjsLi.length <= 0) return;
+   for(let i=0; i<=taskObjsLi.length-1; i++){
+      const currTaskObj = taskObjsLi[i];
+      console.log(currTaskObj);
+      const taskEl = craeteToDoElFromTaskobj(currTaskObj);
+      toDoListEl.appendChild(taskEl);
+   }
 }
 function updateToDosDeadline(boolUseSession = true){
-   alert('awaiting reimplementation');
+   let timePassed;
+   if(boolUseSession){
+      timePassed = getTimePassed(userData[3].currSession, userData[3].lastSeen);
+   } else {
+      timePassed = getTimePassed(userData[3].currLogin, userData[3].lastSeen);
+   }
+   updateDeadlinesOnDb(timePassed[0],timePassed[1],timePassed[2]);
 }
-function loadTasks(){
-   alert('awaiting reimplementation');
+function createEditableToDoDummy(){
+   const taskHolderElDummy = createEl('div');
+   const taskTitleEl = createEl('h5');
+   const taskContentHolder = createEl('span');
+   const lineBraek = createEl('br');
+   const dateCreatedEl = createEl('tt');
+   const taskDatesEl = createEl('span');
+   const dueDateInpt = createEl('input');
+   const unitOfTimeSelect = createEl('select');
+   const optionDays = createEl('option');
+   const optionHours = createEl('option');
+   const optionMins = createEl('option');
+   const createTaskBtn = createEl('button');
+   const taskIndexEl = createEl('tt');
+   taskHolderElDummy.classList.add('taskHolder');
+   taskTitleEl.classList.add('TaskTittle');
+   taskContentHolder.classList.add('taskcontentHolder');
+   dateCreatedEl.classList.add('dateCreated');
+   taskDatesEl.classList.add('taskDates');
+   dueDateInpt.classList.add('dueDate');
+   unitOfTimeSelect.classList.add('unitOfTime');
+   createTaskBtn.classList.add('completeTaskBtn');
+   taskIndexEl.classList.add('index');
+   taskTitleEl.contentEditable = 'true';
+   taskContentHolder.contentEditable = 'true';
+   dueDateInpt.type = 'number';
+   optionDays.value = 'days';
+   optionHours.value = 'hours';
+   optionMins.value = 'minutes';
+   taskTitleEl.innerText = 'EDIT TASK TITLE HERE';
+   taskContentHolder.innerText = 'edit task content here';
+   dateCreatedEl.innerText = new Date();
+   optionDays.innerText = 'days';
+   optionHours.innerText = 'hours';
+   optionMins.innerText = 'minutes';
+   createTaskBtn.innerText = 'create this Task';
+   unitOfTimeSelect.appendChild(optionDays);
+   unitOfTimeSelect.appendChild(optionHours);
+   unitOfTimeSelect.appendChild(optionMins);
+   taskDatesEl.appendChild(dueDateInpt);
+   taskDatesEl.appendChild(unitOfTimeSelect);
+   taskHolderElDummy.appendChild(taskTitleEl);
+   taskHolderElDummy.appendChild(taskContentHolder);
+   taskContentHolder.appendChild(lineBraek);
+   taskHolderElDummy.appendChild(dateCreatedEl);
+   taskHolderElDummy.appendChild(taskDatesEl);
+   taskHolderElDummy.appendChild(createTaskBtn);
+   taskHolderElDummy.appendChild(taskIndexEl);
+   return taskHolderElDummy;
+   /*<div class="taskHolder">
+            <h5 class="TaskTittle">tas title</h5>
+            <span class="taskcontentHodler">task content</span>
+            <br/>
+            <tt class="dateCreated">created: 2nd June 2025</tt>
+            <span class="taskDates">
+                <input type="number" class="dueDate">
+                <select class="unitOfTime daysLeft">
+                    <option value="days">days</option>
+                    <option value="hours">hours</option>
+                    <option value="minites">minutes</option>
+                </select>
+            </span>
+            <button class="completeTaskBtn">Complete Task</button>
+   </div>*/
 }
+function replaceDateEls(taskHolderDummy){
+   const taskDatesEl = taskHolderDummy.querySelector('.taskDates');
+   const dateDueInpt = taskDatesEl.children[0];
+   const unitOfTimeInpt = taskDatesEl.children[1];
+   const dueDateEl = createEl('tt');
+   const unitOfTimeEl = createEl('tt');
+   unitOfTimeEl.classList.add('unitOfTime', 'daysLeft');   
+   dueDateEl.classList.add('dueDate');
+   unitOfTimeEl.innerText = unitOfTimeInpt.value;
+   dueDateEl.innerText = dateDueInpt.value;
+   taskDatesEl.replaceChildren(dueDateEl, unitOfTimeEl);
+}
+function disableContentEditable(taskHolderDummy){
+   const titleEl = taskHolderDummy.querySelector('.TaskTittle');
+   const contentEl = taskHolderDummy.querySelector('.taskcontentHolder');
+   titleEl.removeAttribute('contentEditable');
+   contentEl.removeAttribute('contentEditable');
+}
+function createTaskObjFromDummyEl(taskHolderDummy){
+   const titleEl = taskHolderDummy.querySelector('.TaskTittle');
+   const contentEl = taskHolderDummy.querySelector('.taskcontentHolder');
+   const taskDatesEl = taskHolderDummy.querySelector('.taskDates');
+   const deadlineEl = taskDatesEl.querySelector('.dueDate');
+   const unitOfTimeEl = taskDatesEl.querySelector('.unitOfTime');
+   const now = new Date();
+   const taskObj = createTaskObj(titleEl.innerText, contentEl.innerText, now, deadlineEl.value, unitOfTimeEl.value, false);
+   return taskObj;
+}
+function craeteToDoElFromTaskobj(taskObj){
+   const isComplete = taskObj.isComplete;
+   const taskHolderEl = createEl('div');
+   const taskTitleEl = createEl('h5');
+   const taskContentHolder = createEl('span');
+   const lineBraek = createEl('br');
+   const dateCreatedEl = createEl('tt');
+   const taskDatesEl = createEl('span');
+   const dueDateEl = createEl('tt');
+   const unitOfTimeEl = createEl('tt');
+   const taskActionBtn = createEl('button');
+   const taskIndexEl = createEl('tt');
+   taskTitleEl.innerText = taskObj.title;
+   taskContentHolder.innerText = taskObj.content;
+   dateCreatedEl.innerText = taskObj.dateCreated;
+   dueDateEl.innerText = taskObj.deadline;
+   taskIndexEl.innerText = taskObj.index;
+   if(isComplete == 'false') {
+      taskActionBtn.innerText = 'Complete Task';
+      unitOfTimeEl.innerText = taskObj.unitOftime + ' left';
+      taskActionBtn.addEventListener('click', (e) => {completeTask(e.currentTarget.parentElement);}, { once: true });
+   } else {
+      taskActionBtn.innerText = 'Delete Task';
+      unitOfTimeEl.innerText = taskObj.unitOftime;
+      taskActionBtn.addEventListener('click', (e) => {deleteTask(e.currentTarget.parentElement)}, {once: true});
+   }
+   taskDatesEl.appendChild(dueDateEl);
+   taskDatesEl.appendChild(unitOfTimeEl);
+   taskHolderEl.appendChild(taskTitleEl);
+   taskHolderEl.appendChild(taskContentHolder);
+   taskDatesEl.appendChild(lineBraek);
+   taskHolderEl.appendChild(dateCreatedEl);
+   taskHolderEl.appendChild(taskDatesEl);
+   taskHolderEl.appendChild(taskActionBtn);
+   taskHolderEl.appendChild(taskIndexEl);
+   taskHolderEl.classList.add('taskHolder');
+   taskTitleEl.classList.add('TaskTittle');
+   taskContentHolder.classList.add('taskContentHolder');
+   dateCreatedEl.classList.add('dateCreated');
+   taskDatesEl.classList.add('taskDates');
+   dueDateEl.classList.add('dueDate');
+   unitOfTimeEl.classList.add('unitOfTime', 'daysLeft');
+   taskActionBtn.classList.add('completeTaskBtn');
+   taskIndexEl.classList.add('index');
+   return taskHolderEl;
+   /*
+      <div class="taskHolder">
+            <h5 class="TaskTittle">Click here to create a to do task</h5>
+            <span class="taskcontentHodler">a new task will b ecreated for you to edit</span>
+            <br/>
+            <tt class="dateCreated">created: 2nd June 2025</tt>
+            <span class="taskDates">
+                <tt class="dueDate">2</tt>
+                <tt class="unitOfTime daysLeft">hours left</tt>
+            </span>
+            <button class="completeTaskBtn">Complete Task</button>
+      </div>
+      //console
+   */
+   
+}
+function createTaskObj(title,content,dateCreated,deadline,unitOftime,isComplete){
+   const taskObj = {title: title, content: content, dateCreated: dateCreated, deadline: deadline, unitOftime: unitOftime, isComplete: isComplete};
+   return taskObj;
+}
+function updateDeadlinesOnDb(daysPassed,hoursPassed,minsPassed){
+   const taskObjsLi = userData[2];
+   console.log('updating deadlines on db '+taskObjsLi.length);
+   const timePassedArr = [daysPassed,hoursPassed,minsPassed];
+   const unitOftimeMap = {days: 0, hours: 1, minutes: 2};
+   if(!taskObjsLi.length) return;
+   for(let i=0; i<=taskObjsLi.length-1; i++){
+      const currtaskObj = taskObjsLi[i];
+      console.log(currtaskObj.isComplete);
+      const isComplete = currtaskObj.isComplete;
+      if(isComplete) continue;
+      let currUnitOfTime = 'minutes';
+      if(currtaskObj.unitOftime) currUnitOfTime = currtaskObj.unitOftime;
+      const deadlineInt = parseFloat(currtaskObj.deadline);
+      const timePassed = convertTime(currUnitOfTime, timePassedArr);
+      const currUnitOfTimeIndex = unitOftimeMap[currUnitOfTime];
+      const newDeadlineInt = deadlineInt - timePassed[currUnitOfTimeIndex]*2;
+      currtaskObj.deadline = newDeadlineInt;
+      console.log('new deadline int is'+newDeadlineInt);
+      
+   }
+   updateUserData(2,"null",userData[2]);
+}
+function updateToDoDeadlinesOnUI(){
+   const taskObjLi = userData[2];
+   const taskHolderEls = getEls('taskHolder');
+   if(!taskObjLi.length) return;
+   for(let i=0; i<=taskObjLi.length-1; i++){
+      console.log('iteration '+i);
+      const currTaskobj = taskObjLi[i];
+      const currTaskEl = taskHolderEls[i+3];
+      console.log(currTaskobj.deadline);
+      const currTaskDatesEl = currTaskEl.querySelector('.taskDates');
+      const isDummy = currTaskEl?.classList.contains('dummyEl') || currTaskDatesEl?.children?.[0]?.type;
+      if(isDummy) continue;
+      if(!currTaskEl) break; //quite a brute fix,try n fix fr,the 2 lines above being the one that causes the problem
+      currTaskDatesEl.children[0].innerText = currTaskobj.deadline;
+   }
+}
+
 
 
 //GENERAL INITIALIZATION FUNCTIONS
@@ -219,8 +446,8 @@ function getTimePassed(dateA, dateB) {
    timePassed = subtractTime(currLoginDate[0],currLoginDate[1],currLoginDate[2],lastLoginDate[0],lastLoginDate[1],lastLoginDate[2]);
    isNextDay = currLoginDate[0]-lastLoginDate[0];
    timePassed.push(isNextDay);
-   console.log("days pssed are: "+timePassed[0]);
-   console.log("time passed is "+JSON.stringify(timePassed));
+   //console.log("days pssed are: "+timePassed[0]);
+   //console.log("time passed is "+JSON.stringify(timePassed));
    return timePassed; // [days,hours,minutes,isnextday]
 }
 function parseDateToDayHourMin(dateObj){
@@ -418,7 +645,9 @@ function appendBenchmarks(){
 
 function updateSessionData(){
    updateCurrentSession();
-   //updateToDosDeadline(true);
+   updateToDosDeadline(true);
+   updateToDoDeadlinesOnUI();
+
 }
 function setUp() {
    const date = new Date();
@@ -428,7 +657,7 @@ function setUp() {
    updateUserData(3,"lastLogin",lastLoginDate);
    updateUserData(3,"currLogin",date);
    const timePassedArr = getTimePassed(userData[3]['currLogin'], lastLoginDate);
-   const daysPassed = timePassedArr[0];
+   const daysPassed = parseInt(timePassedArr[0]);
    const isNextDay = timePassedArr[3];
    if(isNextDay && daysPassed < 29 && Math.sign(daysPassed)+1){
       const lastLoginDay = parseInt(JSON.stringify(lastLoginDate).slice(9,11));
@@ -461,17 +690,13 @@ function setUp() {
    let plottingVals = userData[1];
    plottingVals = convertDailyProgressData(plottingVals);
    plotGraph(plottingVals);
-   loadTasks();
+   updateToDosDeadline(false);
+   loadTasksFromDB();
 }
 
 //localStorage.clear();
 setUp();
-updateToDosDeadline(false);
-setInterval(updateSessionData, 60000);
-let myDateA = parseDateToDayHourMin(userData[3].currLogin);
-let myDateB = parseDateToDayHourMin(userData[3].lastSeen);
-let timeDifference = subtractTime(myDateA[0],myDateA[1],myDateA[2],myDateB[0],myDateB[1],myDateB[2]);
-alert(myDateA + ' MY DATE B:  ' + myDateB + " TIME DIFFERNCE:  " + timeDifference);
+setInterval(updateSessionData, 600);
 
 /*
    JUST REBUILD TASKS FROM THE GROUND UP

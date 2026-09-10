@@ -407,13 +407,9 @@ function updateDeadlinesOnDb(daysPassed, hoursPassed, minsPassed) {
 
         deadlineInMins -= timePassedInMins;
 
-        if (deadlineInMins <= 0) {
-            currtaskObj.deadline = 0;
-        } else {
             if (currUnitOfTime === 'days') currtaskObj.deadline = +(deadlineInMins / 1440).toFixed(2);
             else if (currUnitOfTime === 'hours') currtaskObj.deadline = +(deadlineInMins / 60).toFixed(2);
             else currtaskObj.deadline = Math.floor(deadlineInMins);
-        }
     }
     updateUserData(2, "null", userData[2]);
 }

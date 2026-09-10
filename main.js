@@ -615,7 +615,7 @@ function setUp() {
     
     const timePassedArr = getTimePassed(userData[3]['currLogin'], lastLoginDate);
     const daysPassed = parseInt(timePassedArr[0]);
-    const isNextDay = true;
+    const isNextDay = timePassedArr[3];
     
     if (isNextDay && daysPassed < 29 && daysPassed >= 0) {
         const lastLoginDay = new Date(lastLoginDate).getDate();
